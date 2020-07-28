@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django import forms
+from django.http import HttpResponseRedirect
 
 from . import util
 
@@ -15,14 +16,18 @@ def index(request):
 def new(request):
     if request.method == "POST":
         form = new_entry_form(request.POST)
-        if util.get_entry(form.cleaned_data["title"]):
-            return render(request, "encyclopedia/new.html", {
-                "err_existed" : "Sorry, there's an existed page with the this title, please choose another one",
-                "form" : form
-            })
+        title = form.cleaned_data["title"]
+        content = form.cleaned_data["content"]
+        if util.get_entry(title) == None:
+            util.save_entry(title, content)
+            return HttpResponseRedirct(f"/wiki/{title}")
+        return render(request, "encyclopedia/add.html", {
+            "form" : form,
+            "err_existed" : "Sorry, there's an existing page with this title"
+        })
     return render(request, "encyclopedia/new.html", {
         "form" : new_entry_form(),
-        "err_existed" : ""
+        "err_existed" :""
     })
 
 def open_entry(request, entry):
