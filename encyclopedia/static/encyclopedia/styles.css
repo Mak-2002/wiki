@@ -36,3 +36,13 @@ textarea {
 .sidebar h2 {
     margin-top: 5px;
 }
+
+.block{
+    padding: 10px;
+    margin: 10px;
+    color: blue;
+}
+
+.err_messege{
+    color: red;
+}
