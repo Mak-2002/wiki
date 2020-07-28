@@ -6,11 +6,11 @@ Create a New Page
 
 {% block body %}
 
-<form action="{% url 'index' %}" method="POST"  >
+<form action="{% url 'new' %}" method="POST"  >
     {% csrf_token %}
-    <p><input type="text" placeholder="Title" name="title"> </p>
-    <p><textarea name="content" placeholder="Content"></textarea> </p>
-    <input type="submit">
+    {{form}}
+    <input type="submit" value="Save"> <br>
+    {{err_existed}}
 </form>
 
 {% endblock %}
