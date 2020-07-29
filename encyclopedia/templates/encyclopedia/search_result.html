@@ -1,15 +1,23 @@
 {% extends "encyclopedia/layout.html" %}
 
 {% block title %}
-    Search Results for {{entry}}
+    Search Results for {{s_entry}}
 {% endblock %}
 
 {% block body %}
-    <h3>There is no page with the name '{{entry}}', but here are the pages that containes '{{entry}}'</h3>
+    {% if entries %}
+        {% if num == 1 %}
+            <h3>Found 1 similar page</h3>
+        {% else %}
+            <h3>Found {{num}} similar pages</h3>
+        {% endif %}
     <ul>
         {% for entry in entries %}
             <li><a href="/wiki/{{entry}}">{{entry}}</a></li>
         {% endfor %}
     </ul>
+    {% else %}
+    <h3>Sorry, There's no Page with this title</h3>
+    {% endif %}
 
 {% endblock %}

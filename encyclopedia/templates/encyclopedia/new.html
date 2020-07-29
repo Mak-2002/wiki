@@ -9,10 +9,10 @@ Create a New Page
 <h4>Create a New Page</h4>
 <form action="{% url 'new' %}" method="POST">
     {% csrf_token %}
-    <div class="block">Title : <br>  {{form.title}}</div>
-    <div class="block">Content : <br> {{form.content}}</div>
+    <div>Title : <br>  {{form.title}}</div>
+    <div>Content : <br> {{form.content}}</div>
     <input type="submit" value="Save">
-    <div class="err_messege"> {{err_found}} </div>
+    <div> {{err_found}} </div>
 </form>
 
 {% endblock %}

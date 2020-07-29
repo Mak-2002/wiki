@@ -12,23 +12,18 @@ class new_entry_form(forms.Form):
 
 def index(request):
     if request.method == "POST":
-        
-        if form.is_valid():
-            entries = util.list_entries()
-            s_entry = form.cleaned_data["search_string"]
-            found_entries = []
-            for entry in entries:
-                if s_entry in entry:
-                    if s_entry == entry:
-                        return HttpResponseRedirect(f"/wiki/{entry}")
-                    found_entries.append(entry)
-            return render(request, "encyclopedia/search_result.html", {
-                "entries" : found_entries,
-                "entry" : s_entry
-            })
-        return render(request, "encyclopedia/index.html", {
-        "entries": util.list_entries()
-    })
+        entries = util.list_entries()
+        s_entry = request.POST.get('q', None)
+        found_entries = []
+        for entry in entries:
+            if s_entry in entry:
+                if s_entry == entry:
+                    return HttpResponseRedirect(f"/wiki/{entry}")
+                found_entries.append(entry)
+        return render(request, "encyclopedia/search_result.html", {
+            "entries" : found_entries,
+            "num" : len(found_entries)
+        })
     return render(request, "encyclopedia/index.html", {
         "entries": util.list_entries()
     })
@@ -61,5 +56,6 @@ def show_entry(request, entry):
             "entry" : entry
         })
     return render(request, "encyclopedia/entry.html", {
-        "html_content" : markdown2.markdown(util.get_entry(entry))
+        "html_content" : markdown2.markdown(util.get_entry(entry)),
+        "entry" : entry
     })
